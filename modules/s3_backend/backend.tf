@@ -6,4 +6,6 @@ terraform {
   }
 }
 
-
+#output "backendbucket" {
+#   value = aws
+#}
