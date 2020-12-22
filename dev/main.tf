@@ -27,33 +27,33 @@ module "vpc" {
 }
 
 
-# module "my_ec2" {
-#    source = "../modules/ec2"
-#    #ec2_count = 1
-#    ami_id = "ami-02e44367276fe7adc"
-#    instance_type = "t2.micro"
-#    public-1a = module.vpc.public-1a
-#    public-1b = module.vpc.public-1b
-#    private-1a = module.vpc.private-1a
-#    private-1b = module.vpc.private-1b
-# }
-
-# module "my_alb" {
-#    source = "../modules/alb"
-#    public-1a = module.vpc.public-1a
-#    alb_vpc_id = module.vpc.vpc_id
-#    subnet1a_public = module.vpc.public-1a
-#    subnet1b_public = module.vpc.public-1b
-#    instanceattachment1_id = module.my_ec2.web1ainstance
-#    instanceattachment2_id = module.my_ec2.web1binstance
-# }
-
-resource "aws_instance" "myinstance" {
-   ami = "ami-02e44367276fe7adc"
+module "my_ec2" {
+   source = "../modules/ec2"
+   #ec2_count = 1
+   ami_id = "ami-02e44367276fe7adc"
    instance_type = "t2.micro"
-   subnet_id = module.vpc.public-1a
-
-   tags = {
-      Name = "kapil_instance"
-   }
+   public-1a = module.vpc.public-1a
+   public-1b = module.vpc.public-1b
+   private-1a = module.vpc.private-1a
+   private-1b = module.vpc.private-1b
 }
+
+module "my_alb" {
+   source = "../modules/alb"
+   public-1a = module.vpc.public-1a
+   alb_vpc_id = module.vpc.vpc_id
+   subnet1a_public = module.vpc.public-1a
+   subnet1b_public = module.vpc.public-1b
+   instanceattachment1_id = module.my_ec2.web1ainstance
+   instanceattachment2_id = module.my_ec2.web1binstance
+}
+
+# resource "aws_instance" "myinstance" {
+#    ami = "ami-02e44367276fe7adc"
+#    instance_type = "t2.micro"
+#    subnet_id = module.vpc.public-1a
+
+#    tags = {
+#       Name = "kapil_instance"
+#    }
+# }
